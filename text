@@ -1,0 +1,6 @@
+Make me a GUI desktop application that has:
+- Static text field at the top Move your mouse around  within the Window".
+- under the title i want a session id to be displayed. The session ID should be a uuid and looklike
+"ID:{session_id}"
+- under the title i want the mouse coordinates to be displayed.
+The have to be taken from the mouse movement. For example "Coordinates: (621, 107)"
