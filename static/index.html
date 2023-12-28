@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mouse Tracker</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+<h1>Move your mouse around</h1>
+<p id="coordinates">Coordinates: (X, Y)</p>
+<script>
+    let socket = new WebSocket("ws://localhost:8000/ws");
+
+    const coordinatesElement = document.getElementById('coordinates');
+
+    document.addEventListener('mousemove', event => {
+        const x = event.clientX;
+        const y = event.clientY;
+
+        // Update the coordinates display
+        coordinatesElement.textContent = `Coordinates: (${x}, ${y})`;
+
+        if (socket.readyState === WebSocket.OPEN) {
+            const payload = {
+                type: 'move',
+                x: x,
+                y: y
+            };
+            socket.send(JSON.stringify(payload));
+        }
+    });
+
+    document.addEventListener('contextmenu', event => {
+        event.preventDefault();  // Prevent the default context menu
+        if (socket.readyState === WebSocket.OPEN) {
+            const payload = {
+                type: 'right-click'
+            };
+            socket.send(JSON.stringify(payload));
+        }
+    });
+</script>
+</body>
+</html>
